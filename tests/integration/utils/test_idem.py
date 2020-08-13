@@ -3,15 +3,16 @@ Test utility methods that the idem module and state share
 """
 from contextlib import contextmanager
 
+import pytest
 import salt.utils.idem as idem
 import salt.utils.path
 from tests.support.case import TestCase
 from tests.support.unit import skipIf
 
 HAS_IDEM = not salt.utils.path.which("idem")
+pytestmark = pytest.mark.skipif(not idem.HAS_POP[0], reason=idem.HAS_POP[1])
 
 
-@skipIf(not idem.HAS_POP[0], str(idem.HAS_POP[1]))
 @contextmanager
 class TestIdem(TestCase):
     @classmethod
