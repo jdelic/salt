@@ -759,7 +759,15 @@ def _pytest(session, coverage, cmd_args):
         cmd_args.append("--lf")
         if coverage is True:
             _run_with_coverage(
-                session, "python", "-m", "coverage", "run", "-m", "pytest", *cmd_args
+                session,
+                "python",
+                "-m",
+                "coverage",
+                "run",
+                "-m",
+                "pytest",
+                "--showlocals",
+                *cmd_args
             )
         else:
             session.run("python", "-m", "pytest", *cmd_args, env=env)
