@@ -141,13 +141,16 @@ class SSHDMixin(SaltClientMixin, SaltReturnAssertsMixin):
     Functions to stand up an SSHD server to serve up git repos for tests.
     """
 
-    sshd_proc = None
-    prep_states_ran = False
-    known_hosts_setup = False
+    # sshd_proc = None
+    # prep_states_ran = False
+    # known_hosts_setup = False
 
     @classmethod
     def setUpClass(cls):  # pylint: disable=arguments-differ
         super().setUpClass()
+        cls.prep_states_ran = False
+        cls.sshd_proc = None
+        cls.known_hosts_setup = False
         try:
             log.info("%s: prep_server()", cls.__name__)
             cls.sshd_bin = salt.utils.path.which("sshd")
@@ -278,8 +281,8 @@ class WebserverMixin(SaltClientMixin, SaltReturnAssertsMixin):
     serve up git repos for tests.
     """
 
-    nginx_proc = uwsgi_proc = None
-    prep_states_ran = False
+    # nginx_proc = uwsgi_proc = None
+    # prep_states_ran = False
 
     @classmethod
     def setUpClass(cls):  # pylint: disable=arguments-differ
@@ -288,6 +291,8 @@ class WebserverMixin(SaltClientMixin, SaltReturnAssertsMixin):
         setUpClass function.
         """
         super().setUpClass()
+        cls.prep_states_ran = False
+        cls.nginx_proc = cls.uwsgi_proc = None
         cls.root_dir = tempfile.mkdtemp(dir=RUNTIME_VARS.TMP)
         cls.config_dir = os.path.join(cls.root_dir, "config")
         cls.nginx_conf = os.path.join(cls.config_dir, "nginx.conf")
